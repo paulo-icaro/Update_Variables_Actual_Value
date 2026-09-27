@@ -1,6 +1,6 @@
-# =============================== #
-# === CURRENT VALUES UPDATING === #
-# =============================== #
+# =========================================== #
+# === CURRENT TO ACTUAL - VALUES UPDATING === #
+# =========================================== #
 
 # --- Script by: Paulo Icaro --- #
 
@@ -15,7 +15,7 @@ source('https://raw.githubusercontent.com/paulo-icaro/Variables_Frequency_Transf
 # ====================== #
 # === Current Values === #
 # ====================== #
-current_value = function(series, variables, base_period = 'most_recent', frequency = 'monthly', start, end = year(Sys.Date())){
+value_updating = function(series, variables, base_period = 'most_recent', frequency = 'monthly', start, end = year(Sys.Date())){
   
   # --- Extract Series --- #
   price_index =  ipeadata_query('PRECOS12_IPCA12', 'ipca', seq(from = start, to = end, by = 1))
