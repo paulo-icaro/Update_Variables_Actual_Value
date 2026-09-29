@@ -15,7 +15,7 @@ source('https://raw.githubusercontent.com/paulo-icaro/Variables_Frequency_Transf
 # ====================== #
 # === Current Values === #
 # ====================== #
-value_updating = function(series, variables, base_period = 'most_recent', frequency = 'monthly', start, end = year(Sys.Date()), show_price_index = TRUE, extract_load_price_index = TRUE){
+value_updating = function(series, variables, base_period = 'most_recent', start, end = year(Sys.Date()), show_price_index = TRUE, extract_load_price_index = TRUE){
   
   # --- Extract Series --- #
   if(extract_load_price_index != TRUE){
@@ -39,15 +39,12 @@ value_updating = function(series, variables, base_period = 'most_recent', freque
   price_index = price_index |> mutate(ipca_adj = ipca/base_index*100)
   
   
-  # --- Adjusting Price Index Frequency --- #
-  price_index_freq_adj = cumulative_transform(transform_type = 'periodo_final', frequency = frequency, dataset = price_index)
-  
-  
   # --- Current Series Value --- #
   adjusted_series = 
     series |> 
     inner_join(x = price_index, by = 'data') |>
     mutate(across(all_of(variables), ~ .x/ipca_adj * 100))
+  
   
   # --- Output --- #
   if(show_price_index == FALSE){
