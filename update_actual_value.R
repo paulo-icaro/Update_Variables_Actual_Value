@@ -29,9 +29,9 @@ value_updating = function(series, variables, base_period = 'most_recent', start,
   
   # --- Base Price Index --- #
   if(base_period == 'most_recent'){
-    base_index = last(price_index$ipca)
+    base_index = price_index |> arrange(data) |> slice_tail(n = 1) |> pull(ipca)
   } else {
-    base_index = price_index |> filter(data == paste0(base_period,'-01')) |> pull(ipca)
+    base_index = price_index |> filter(data == as.Date(paste0(base_period,'-01'))) |> pull(ipca)
   }
   
   
