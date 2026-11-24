@@ -15,7 +15,7 @@ source('https://raw.githubusercontent.com/paulo-icaro/Variables_Frequency_Transf
 # ====================== #
 # === Current Values === #
 # ====================== #
-value_update = function(series, variables, price_index_code, price_index_name, base_period = 'most_recent', start, end = year(Sys.Date()), show_price_index = TRUE, extract_load_price_index = TRUE){
+value_update = function(series, variables, price_index_code = 'PRECOS12_IPCA12', price_index_name = 'ipca', base_period = 'most_recent', start, end = year(Sys.Date()), show_price_index = TRUE, extract_load_price_index = TRUE){
   
   # --- Extract Series --- #
   if(extract_load_price_index != TRUE){
