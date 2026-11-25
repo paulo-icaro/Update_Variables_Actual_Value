@@ -72,14 +72,14 @@ especificação dos seguintes argumentos para realizar a conversão:
       O procedimento de correção monetária tem como base o Índice de
 Preços ao Consumidor Amplo (IPCA) extraído diretamente da
 [API](https://www.ipeadata.gov.br/Default.aspx)[^1] do Instituto Ipea.
-Contudo, caso deseje realizar a correção utilizando outro índice, o
-usuário tem a opção de selecionar outro índice que esteja disponível na
-API utilizando os argumentos `price_index_code` e `price_index_name`. Em
-último caso, se desejar importar a série de preços de um arquivo do tipo
-**.xlsx**, basta usar o argumento `extract_load_price_index`.\
-      Através do argumento `base_period` o usuário tem a liberadade de
-determinar[^2] para qual período deseja fazer a conversão. O último
-período disponível será considerado[^3] no caso da variável não é
+Caso deseje realizar a correção utilizando outro índice, o usuário tem a
+opção de selecionar outro índice que esteja disponível na API utilizando
+os argumentos `price_index_code` e `price_index_name`. Em último caso,
+se desejar importar a série de preços de um arquivo do tipo **.xlsx**,
+basta usar o argumento `extract_load_price_index`.\
+      Através do argumento `base_period` o usuário tem a liberadade para
+determinar[^2] o período ao qual deseja fazer a conversão. O último
+período disponível será considerado[^3] no caso da variável não ser
 especificada. O usuário precisa indicar o período selecionado utilizando
 o seguinte padrão de data: `AAAA-MM`.\
       Durante o processamento das informações, além da série de preços
@@ -174,10 +174,11 @@ dataset_adjusted = value_update(series = dataset, variables = c('exportacao', 'i
 <p>
 
       Neste exercício,a série IPCA padrão e sua versão com a base
-convertida para o período 2025-12 foram adicionadas aos dados originais.
-Note também que estruturalmente a função foi criada de modo a
-transformar bases de dados onde cada variável está contido em uma coluna
-de dados, tendo outros formatos aplicação iniviável.
+convertida para o período 2025-12 foram adicionadas as series
+corrigidas. Note também que estruturalmente a função foi criada de modo
+a transformar bases de dados onde cada variável/série está contida em
+uma coluna de dados. Outros formatos do conjunto de dados tornam a
+aplicação da função inviável.
 
 </p>
 
