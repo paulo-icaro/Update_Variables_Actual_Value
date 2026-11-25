@@ -15,10 +15,10 @@ source('https://raw.githubusercontent.com/paulo-icaro/Variables_Frequency_Transf
 # ====================== #
 # === Current Values === #
 # ====================== #
-value_update = function(series, variables, price_index_code = 'PRECOS12_IPCA12', price_index_name = 'ipca', base_period = 'most_recent', start, end = year(Sys.Date()), show_price_index = TRUE, extract_load_price_index = TRUE){
+value_update = function(series, variables, price_index_code = 'PRECOS12_IPCA12', price_index_name = 'ipca', base_period = 'most_recent', start, end = year(Sys.Date()), show_price_index = TRUE, load_price_index = TRUE){
   
   # --- Extract Series --- #
-  if(extract_load_price_index != TRUE){
+  if(load_price_index != TRUE){
     price_index = readxl::read_excel(path = file.choose(), col_names = c('data', 'ipca'), skip = 1)
     price_index = price_index %>% mutate(data = as.Date(paste0(substr(data, 1, 4), '-', substr(data, 6, 7), '-01')))
   } else {
