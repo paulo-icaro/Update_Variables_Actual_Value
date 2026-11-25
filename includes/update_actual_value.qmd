@@ -1,0 +1,26 @@
+<!------------------------------------------->
+<!--- Detalhamento Função Github Document --->
+<!------------------------------------------->
+:::{.content-visible when-format = 'gfm'}
+```r
+value_update(series, variables, base_period, start, end, show_price_index, extract_load_price_index)
+```
+:::
+
+<!------------------------------->
+<!--- Detalhamento Função PDF --->
+<!------------------------------->
+:::{.content-visible when-format = 'pdf'}
+\begin{functioncard}
+\texttt{$ \textbf{value\_update} (series, variables, base\_period, start, end, show\_price\_index, extract\_load) $}
+\end{functioncard}
+:::
+
+<!-------------------------------->
+<!--- Detalhamento Função HTML --->
+<!-------------------------------->
+:::{.content-visible when-format = 'html'}
+<div class = 'function_card'> 
+value_update(series, variables, base_period, start, end, show_price_index, extract_load_price_index)
+</div>
+:::
