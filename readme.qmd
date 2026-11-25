@@ -1,0 +1,158 @@
+---
+title: "Atualização de Valores Monetários"
+author: Paulo Icaro
+format:
+  gfm: default
+  pdf:
+    pdf-engine: pdflatex
+    header-includes:
+    - \usepackage{fvextra}
+    - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}, fontsize=\small}
+    - \usepackage{tcolorbox}
+    - \newtcolorbox{functioncard}{
+        colback=red!5,
+        colframe=red!70!black,
+        arc=2mm,
+        boxrule=0.8pt}
+  html:
+    css: stylesheet.css
+
+date: "2026-11-24"
+editor: source
+---
+
+
+
+<!------------->
+<!-- PARTE 1 -->
+<!------------->
+## Objetivo
+<p>
+|       Este repositório [Update_Variables_Actual_Value](https://github.com/paulo-icaro/Update_Variables_Actual_Value) foi criado no intuito de auxiliar a conversão de valores monetários.
+
+
+
+<!------------->
+<!-- PARTE 2 -->
+<!------------->
+## Função **value_update**
+
+{{< include includes/update_actual_value.qmd >}}
+
+
+<p>
+|        A função [value_update](https://github.com/paulo-icaro/Update_Variables_Actual_Value/blob/main/update_actual_value.R) é responsável pela correção monetária. A função necessita da especificação dos seguintes argumentos para realizar a conversão:
+</p>
+
+| **Argumento** | **Descrição** | **Observação** |
+|:--|:----|:--|
+| series | Conjunto de dados que passará pelo processo | (Obrigatório) |
+| variables | Nome das colunas que serão atualizadas | (Obrigatório) |
+| base_period | Período ao qual se deseja realizar a conversão | Caso não seja informado, será considerado o período mais recente do IPCA. (Opcional) |
+| start | Período de inicial ao qual a série do IPCA será extraída | Defina de modo que a série de IPCA seja compatível em termos de frequência temporal com as variáveis a serem atualizadas. (Obrigatório) |
+| end | Período final ao qual a série IPCA será extraída | Caso não seja informado, será considerado extraído a série até o dado mais recente disponível. (Opcional) |
+| price_index_code | Código da série de preços a ser utilizada na atualização | Caso não seja informado, será considerado o índice IPCA. (Opcional) |
+| price_index_name | Nome da série de preços a ser utilizada na atualização | Caso não seja informado, será considerado o índice IPCA. (Opcional) |
+| show_price_index | Define se o usuário deseja que as séries utilizadas para corrigir os valores seja adicionada ao conjunto de dados. | Caso não seja informado, será adicionado a série do Índice IPCA e a também a versão da série transformada na base informada pelo usuário |
+| extract_load_price_index | Opção disponível para importar o índice de preços de um arquivo local | (Opcional) |
+
+<p>
+|       O procedimento de correção monetária tem como base o Índice de Preços ao Consumidor Amplo (IPCA) extraído diretamente da [API](https://www.ipeadata.gov.br/Default.aspx)^[[Clique aqui](https://github.com/paulo-icaro/Ipeadata_API/blob/main/readme_pt_br.md) para mais detalhes a respeito da extração da série de inflação.] do Instituto Ipea. Contudo, caso deseje realizar a correção utilizando outro índice, o usuário tem a opção de selecionar outro índice que esteja disponível na API utilizando os argumentos `price_index_code` e `price_index_name`. Em último caso, se desejar importar a série de preços de um arquivo do tipo **.xlsx**, basta usar o argumento `extract_load_price_index`.
+|       Através do argumento `base_period` o usuário tem a liberadade de determinar^[É importante destacar que a escolha de um período factivel para evitar erro na execução da rotina.] para qual período deseja fazer a conversão. O último período disponível será considerado^[Por padrão o argumento recebe o status `most_recent` indicando que o período a ser considerado será o mais recente.] no caso da variável não é especificada. O usuário precisa indicar o período selecionado utilizando o seguinte padrão de data: `AAAA-MM`.
+|       Durante o processamento das informações, além da série de preços no ano base vindo da API, uma nova coluna da série de preços ajustada ao período base selecionado é adicionada a base de dados inicial. Caso o usuário não deseje que essas duas componham a base final, deve ajustar o argumento `show_price_index`.
+</p>
+
+
+
+<!------------->
+<!-- PARTE 3 -->
+<!------------->
+## Aplicação: Atualização das séries de Exportação e Importação do Brasil
+
+<p>
+|       Vejamos a seguinte aplicação: serão extraídas^[A extração das séries foi possível por meio do uso da função [bacen_query](https://github.com/paulo-icaro/Bacen_API) ] as séries de exportação e importação para o Brasil a valores nominais, considerando o intervalo 2015-2025, as quais serão devidamente corrigidas a valores de dezembro de 2025.
+</p>
+
+```{r}
+#| label: Correção Monetária das Séries de Exportação e Importação para o Brasil - Parte 1
+#| echo: TRUE
+#| message: FALSE
+#| warning: FALSE
+#| comment: ''
+#| eval: TRUE
+
+
+# =============== #
+# === Scripts === #
+# =============== #
+source('https://raw.githubusercontent.com/paulo-icaro/Bacen_API/main/bacen_query.R')
+
+
+# ======================= #
+# === Data Extraction === #
+# ======================= #
+
+# --- Informações Prévias --- #
+cod_bacen_series = c('13093', '13094')
+name_bacen_series = c('exportacao', 'importacao')
+start_date = '01/01/2015'
+end_date = '31/12/2025'
+
+# --- Extração --- #
+dataset = bacen_query(cod_bacen_series, name_bacen_series, start_date, end_date)
+
+# --- Ajuste na Data --- #
+dataset = dataset %>% mutate(data = as.Date(data, tryFormats = c('%d/%m/%Y')))
+
+# --- Ajuste para tipo numérico
+dataset[c(-1)] = lapply(X = dataset[c(-1)], FUN = as.numeric)
+```
+
+```{r}
+#| label: Correção Monetária das Séries de Exportação e Importação para o Brasil - Parte 2
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+#| comment: ''
+#| eval: TRUE
+
+# --- Prints --- #
+tail(dataset, n = 10)
+```
+
+```{r}
+#| label: Correção Monetária das Séries de Exportação e Importação para o Brasil - Parte 3
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+#| comment: ''
+
+
+# =============== #
+# === Scripts === #
+# =============== #
+source('https://raw.githubusercontent.com/paulo-icaro/Update_Variables_Actual_Value/refs/heads/main/update_actual_value.R')
+
+
+# ========================== #
+# === Correção Monetária === #
+# ========================== #
+dataset_adjusted = value_update(series = dataset, variables = c('exportacao', 'importacao'), base_period = '2025-12', show_price_index = TRUE, start = 2015)
+```
+
+```{r}
+#| label: Correção Monetária das Séries de Exportação e Importação para o Brasil - Parte 4
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+#| comment: ''
+#| eval: TRUE
+
+# --- Prints --- #
+tail(dataset_adjusted, n = 10)
+```
+
+<p>
+|       Neste exercício,a série IPCA padrão e sua versão com a base convertida para o período 2025-12 foram adicionadas aos dados originais. Note também que estruturalmente a função foi criada de modo a transformar bases de dados onde cada variável está contido em uma coluna de dados, tendo outros formatos aplicação iniviável. 
+</p>
