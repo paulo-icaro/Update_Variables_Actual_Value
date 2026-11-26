@@ -3,7 +3,7 @@
 <!------------------------------------------->
 :::{.content-visible when-format = 'gfm'}
 ```r
-value_update(series, variables, base_period, start, end, show_price_index, extract_load_price_index)
+value_update(series, variables, base_period, start, end, price_index_code, price_index_name, show_price_index, extract_load_price_index)
 ```
 :::
 
@@ -21,6 +21,6 @@ value_update(series, variables, base_period, start, end, show_price_index, extra
 <!-------------------------------->
 :::{.content-visible when-format = 'html'}
 <div class = 'function_card'> 
-value_update(series, variables, base_period, start, end, show_price_index, extract_load_price_index)
+value_update(series, variables, base_period, start, end,price_index_code, price_index_name, show_price_index,load_price_index)
 </div>
 :::
