@@ -12,7 +12,7 @@ value_update(series, variables, base_period, start, end, price_index_code, price
 <!------------------------------->
 :::{.content-visible when-format = 'pdf'}
 \begin{functioncard}
-\texttt{$ \textbf{value\_update} (series, variables, base\_period, start, end, show\_price\_index, extract\_load) $}
+\texttt{$ \textbf{value\_update} (series, variables, base\_period, start, end, price\_index\_code, price\_index\_name, show\_price\_index, extract\_load) $}
 \end{functioncard}
 :::
 

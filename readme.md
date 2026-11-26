@@ -32,7 +32,7 @@ monetários.
 <!------------------------------------------->
 
 ``` r
-value_update(series, variables, base_period, start, end, show_price_index, extract_load_price_index)
+value_update(series, variables, base_period, start, end, price_index_code, price_index_name, show_price_index, extract_load_price_index)
 ```
 
 <!------------------------------->
