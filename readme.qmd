@@ -29,7 +29,7 @@ editor: source
 <!------------->
 ## Objetivo
 <p>
-|       O repositório [Update_Variables_Actual_Value](https://github.com/paulo-icaro/Update_Variables_Actual_Value) foi criado no intuito de auxiliar a conversão de valores monetários.
+|       O repositório [Update_Variables_Actual_Value](https://github.com/paulo-icaro/Update_Variables_Actual_Value) foi criado no intuito de auxiliar a conversão/atualização de valores monetários.
 
 
 

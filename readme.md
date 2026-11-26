@@ -12,9 +12,10 @@ Paulo Icaro
 
 <p>
 
-      Este repositório
+      O repositório
 [Update_Variables_Actual_Value](https://github.com/paulo-icaro/Update_Variables_Actual_Value)
-foi criado no intuito de auxiliar a conversão de valores monetários.
+foi criado no intuito de auxiliar a conversão/atualização de valores
+monetários.
 
 <!------------->
 
@@ -65,7 +66,7 @@ especificação dos seguintes argumentos para realizar a conversão:
 | price_index_code | Código da série de preços a ser utilizada na atualização | Caso não seja informado, será considerado o índice IPCA. (Opcional) |
 | price_index_name | Nome da série de preços a ser utilizada na atualização | Caso não seja informado, será considerado o índice IPCA. (Opcional) |
 | show_price_index | Define se o usuário deseja que as séries utilizadas para corrigir os valores seja adicionada ao conjunto de dados. | Caso não seja informado, será adicionado a série do Índice IPCA e a também a versão da série transformada na base informada pelo usuário |
-| extract_load_price_index | Opção disponível para importar o índice de preços de um arquivo local | (Opcional) |
+| load_price_index | Opção disponível para importar o índice de preços de um arquivo local | (Opcional) |
 
 <p>
 
@@ -76,7 +77,7 @@ Caso deseje realizar a correção utilizando outro índice, o usuário tem a
 opção de selecionar outro índice que esteja disponível na API utilizando
 os argumentos `price_index_code` e `price_index_name`. Em último caso,
 se desejar importar a série de preços de um arquivo do tipo **.xlsx**,
-basta usar o argumento `extract_load_price_index`.\
+basta usar o argumento `load_price_index`.\
       Através do argumento `base_period` o usuário tem a liberadade para
 determinar[^2] o período ao qual deseja fazer a conversão. O último
 período disponível será considerado[^3] no caso da variável não ser
